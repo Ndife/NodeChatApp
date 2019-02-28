@@ -17,11 +17,23 @@ server.listen(port, () => {
 })
 
 io.on('connection', (socket) => {
-  console.log('New user join');
+  console.log('New user connected');
 
+
+  socket.emit('newMessage',{
+    from:'uche',
+    text:'This is a new message',
+    createdAt:'555'
+  })
+
+  socket.on('createMessage',(message) =>{
+    console.log('New Message ',message);
+  })
+  
   socket.on('disconnect', () =>{
     console.log('User left');
   })
+
 })
 
 // view engine setup
