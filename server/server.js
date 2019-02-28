@@ -19,14 +19,33 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
   console.log('New user connected');
 
+  // for the current user
+  socket.emit('newMessage',{
+    from: 'Admin',
+    text: 'Welcome to the chat app',
+    createdAt: new Date().getTime()
+  })
+
+  // excludes the current user only
+  socket.broadcast.emit('newMessage',{ 
+    from:'Admin',
+    text: 'New user Joined',
+    createdAt: new Date().getTime()
+  })
 
   socket.on('createMessage',(message) =>{
     console.log('createMessage',message);
     io.emit('newMessage',{
-      from: message.from,
+      from: message.from, 
       text: message.text,
       createdAt: new Date().getTime()
     })
+
+    // socket.broadcast.emit('newMessage',{
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // })
   })
   
   socket.on('disconnect', () =>{
