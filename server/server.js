@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var http = require('http');
 var socketIO = require('socket.io');
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 
 var app = express();
 var server = http.createServer(app);
@@ -34,6 +34,10 @@ io.on('connection', (socket) => {
     //   text: message.text,
     //   createdAt: new Date().getTime()
     // })
+  })
+
+  socket.on('createLocationMessage',(cords) =>{
+    io.emit('newLocationMessage',generateLocationMessage('Admin', cords.latitude ,cords.longitude))
   })
   
   socket.on('disconnect', () =>{
