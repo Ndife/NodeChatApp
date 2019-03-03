@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('createLocationMessage',(cords) =>{
-    io.emit('newLocationMessage',generateLocationMessage('Admin', cords.latitude ,cords.longitude))
+    io.emit('newLocationMessage',generateLocationMessage('User', cords.latitude ,cords.longitude))
   })
   
   socket.on('disconnect', () =>{
